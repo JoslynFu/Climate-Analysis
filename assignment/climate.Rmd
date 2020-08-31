@@ -20,7 +20,7 @@ library(tidyverse)
 ```{r message=FALSE}
 
 co2 <- 
-read_table("ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt", 
+read_table("https://raw.githubusercontent.com/espm-157/climate-template/master/assignment/co2_mm_mlo.txt", 
                   comment="#",
                   col_names = c("year", "month", "decimal_date", "average",
                                 "interpolated", "trend", "days"),
