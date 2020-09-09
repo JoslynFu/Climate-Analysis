@@ -66,9 +66,11 @@ Describe the data set to the best of your ability given the documentation provid
 Construct the necessary R code to import and prepare for manipulation the following data set: <http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt>
 
 ```{r}
-temperatuure <- read_tsv(
-  "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt")
-temperatuure
+temperature <- read_table(
+  "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt",
+  skip = 5,
+  col_names = c("year","no_smoothing","lowess"))
+temperature
 ```
 
 
@@ -76,8 +78,11 @@ temperatuure
 
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
 ```{r}
-ggplot(data = a) 
+temperature %>%
+  ggplot(aes(x = year, y = no_smoothing))+
+  geom_point(aes(y = lowess))
 ```
+
 
 
 ## Question 4: Evaluating the evidence for a "Pause" in warming?
@@ -157,10 +162,26 @@ The trend is that both ice mass are decreasing and in each year, there is a wave
 ## Question 2:
 
 Construct the necessary R code to import this data set as a tidy `Table` object.
+```{r}
+sea_level <- read_table("http://climate.nasa.gov/system/internal_resources/details/original/121_Global_Sea_Level_Data_File.txt",
+                        skip = 50,
+                        col_names = c("altimeter_type","merged_file_cycle","number_of_observations","number_of_weighted_observations",
+                                      "gmsl_variation_adjustment_not_applied","standard_deviation_of_gmsl_variation_no_adjustment",
+                                      "gmsl_variation_adjustment_applied","standard_deviation_of_gmsl_adjustment",
+                                      "smoothed_gmsl_variation","smoothed_gmsl_variation_removed_signal"))
+sea_level
+```
+
 
 ## Question 3:
 
 Plot the data and describe the trends you observe.
+```{r}
+sea_level %>%
+  ggplot(aes(x = number_of_observations)) +
+  geom_point(aes(y = smoothed_gmsl_variation),col= "blue") +
+  geom_point(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
+```
 
 
 
@@ -180,6 +201,12 @@ Plot the data and describe the trends you observe.
 ## Question 2:
 
 Construct the necessary R code to import this data set as a tidy `Table` object.
+
+```{r}
+sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+sea_ice
+```
+
 
 ## Question 3:
 
