@@ -66,16 +66,18 @@ Describe the data set to the best of your ability given the documentation provid
 Construct the necessary R code to import and prepare for manipulation the following data set: <http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt>
 
 ```{r}
-a <- 
-read_table(
+temperatuure <- read_tsv(
   "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt")
-a
+temperatuure
 ```
 
 
 ## Question 3:
 
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
+```{r}
+ggplot(data = a) 
+```
 
 
 ## Question 4: Evaluating the evidence for a "Pause" in warming?
@@ -106,15 +108,37 @@ What additional analyses or data sources would better help you refine your argum
 - Describe the data set: what are the columns and units? Where do the numbers come from? 
 - What is the uncertainty in measurment? Resolution of the data? Interpretation of missing values?
 
+There are three columns iin the table. 
+i) 'Time' in units of 'year-day'
+ii) 'greenland_mass' in units of 'Gt'
+iii) 'antarctica_mass' in units of 'Gt'
+
+The numbers are from Ice mass measurement by NASA's GRACE satellites.
+The uncertainty depends on the accuracy of the satellites. The missing values indicate a gap between missions during that time.
+
+
 
 ## Question 2:
 
 Construct the necessary R code to import this data set as a tidy `Table` object.
+```{r}
+ice <- read_csv("http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv",skip = 10,
+                col_names = c("time","greenland_mass","antarctica_mass"))
+ice
+```
+
 
 ## Question 3:
 
 Plot the data and describe the trends you observe.
+```{r}
+ice %>%
+  ggplot(aes(x = time)) + 
+  geom_point(aes(y = greenland_mass), col="blue") +
+  geom_point(aes(y = antarctica_mass), col = "green")
+```
 
+The trend is that both ice mass are decreasing and in each year, there is a wave-like shape, meaning a decrease in summer and an increase in winter. However, greenland_mass is decreasing at a faster rate than antarctica mass.
 
 
 # Exercise III: Rising Sea Levels?
