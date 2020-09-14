@@ -1,6 +1,6 @@
 ---
 title: "Climate Exercise"
-author: "Carl Boettiger & Dana Seidel"
+author: "Joslyn Fu & Kelly Yuan"
 output: github_document
 ---
 
@@ -31,7 +31,6 @@ co2
 
 ```{r}
 ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
-
 ```
 
 Which months are the CO2 values at the maximum? Minimum?  Why is this?
@@ -69,7 +68,8 @@ Construct the necessary R code to import and prepare for manipulation the follow
 temperature <- read_table(
   "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt",
   skip = 5,
-  col_names = c("year","no_smoothing","lowess"))
+  col_names = c("year","temp","lowess5"))
+
 temperature
 ```
 
@@ -79,8 +79,7 @@ temperature
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
 ```{r}
 temperature %>%
-  ggplot(aes(x = year, y = no_smoothing))+
-  geom_point(aes(y = lowess))
+  ggplot(aes(x = year, y = temp)) + geom_line()
 ```
 
 
@@ -139,8 +138,8 @@ Plot the data and describe the trends you observe.
 ```{r}
 ice %>%
   ggplot(aes(x = time)) + 
-  geom_point(aes(y = greenland_mass), col="blue") +
-  geom_point(aes(y = antarctica_mass), col = "green")
+  geom_line(aes(y = greenland_mass), col="blue") +
+  geom_line(aes(y = antarctica_mass), col = "green")
 ```
 
 The trend is that both ice mass are decreasing and in each year, there is a wave-like shape, meaning a decrease in summer and an increase in winter. However, greenland_mass is decreasing at a faster rate than antarctica mass.
@@ -179,8 +178,8 @@ Plot the data and describe the trends you observe.
 ```{r}
 sea_level %>%
   ggplot(aes(x = number_of_observations)) +
-  geom_point(aes(y = smoothed_gmsl_variation),col= "blue") +
-  geom_point(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
+  geom_line(aes(y = smoothed_gmsl_variation),col= "blue") +
+  geom_line(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
 ```
 
 
@@ -203,8 +202,13 @@ sea_level %>%
 Construct the necessary R code to import this data set as a tidy `Table` object.
 
 ```{r}
-#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
-#sea_ice
+
+```
+
+
+```{r}
+sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+sea_ice.head()
 ```
 
 
@@ -238,5 +242,9 @@ Vostok Core, back to 400,000 yrs before present day
 - Plot joined data
 - Describe your conclusions
 
+```{r}
+table <- read_csv(http://cdiac.ornl.gov/trends/co2/ice_core_co2.html)
+table
+```
 
 
