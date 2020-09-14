@@ -55,7 +55,7 @@ Describe the data set to the best of your ability given the documentation provid
 - What is the resolution of the data?
 - Are their missing values? How should they be handled?
 
-The temperature dataset contains information about gobal annual mean temperature from 1880 to 2019. 
+The temperature dataset contains information about gobal annual mean temperature from 1880 to 2019 relative to 1951-1980 average temperatures. This graph illustrates the change in global surface temperature relative to 1951-1980 average temperatures.
 
 
 Please see the below dataset table.
@@ -77,7 +77,7 @@ temperature %>%
   geom_point(aes(y = lowess))
 ```
 
-According to the graph, the overall trend in global temperature
+According to the graph, the overall trend in global temperature is increasing. Starting from 2012, the increase in global temperature is even 
 
 ## Question 4: Evaluating the evidence for a "Pause" in warming?
 
