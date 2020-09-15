@@ -1,12 +1,9 @@
 ---
 title: "Climate Exercise"
-<<<<<<< HEAD
-author: "Joslyn Fu & Jiaming Yuan"
-=======
 author: "Joslyn Fu & Kelly Yuan"
->>>>>>> 3ddd5a132adada8335d77cb89e33e641956bb052
 output: github_document
 ---
+
 
 This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change, 
 gkh
