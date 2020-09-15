@@ -18,7 +18,7 @@ library(tidyverse)
 
 ``` r
 co2 <- 
-read_table("ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt", 
+read_table("https://raw.githubusercontent.com/espm-157/climate-template/master/assignment/co2_mm_mlo.txt", 
                   comment="#",
                   col_names = c("year", "month", "decimal_date", "average",
                                 "interpolated", "trend", "days"),
@@ -26,9 +26,9 @@ read_table("ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt",
 co2
 ```
 
-    ## # A tibble: 725 x 7
+    ## # A tibble: 749 x 7
     ##     year month decimal_date average interpolated trend  days
-    ##    <int> <int>        <dbl>   <dbl>        <dbl> <dbl> <int>
+    ##    <dbl> <dbl>        <dbl>   <dbl>        <dbl> <dbl> <dbl>
     ##  1  1958     3        1958.    316.         316.  315.    NA
     ##  2  1958     4        1958.    317.         317.  315.    NA
     ##  3  1958     5        1958.    318.         318.  315.    NA
@@ -39,7 +39,7 @@ co2
     ##  8  1958    10        1959.     NA          313.  316.    NA
     ##  9  1958    11        1959.    313.         313.  315.    NA
     ## 10  1958    12        1959.    315.         315.  316.    NA
-    ## # ... with 715 more rows
+    ## # … with 739 more rows
 
 ``` r
 ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
@@ -48,6 +48,20 @@ ggplot(co2, aes(x = decimal_date, y = average)) + geom_line()
 ![](climate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 Which months are the CO2 values at the maximum? Minimum? Why is this?
+
+Maximum: 5, 6 Minimum Range 9, 10,
+
+Much of this variation happens because of the role of plants in the
+carbon cycle. Plants extract CO2 from the atmosphere, along with
+sunlight and water, to make food and other substances that they need to
+grow.CO2 in the atmosphere decreases during the growing season and
+increases during the rest of the year, which leads to maximum buildup in
+April and May before photosynthesis begins to take over in the summer
+time. Photosynthesis, in which plants take up CO2 from the atmosphere
+and release oxygen, dominates during the growing season (the warmer part
+of the year). Respiration, by which plants and animals take up oxygen
+and release CO2, occurs all the time but dominates during the colder
+months of the year.
 
 What rolling average is used in computing the “trend” line? How does the
 trend depend on the rolling average?
@@ -79,10 +93,51 @@ Construct the necessary R code to import and prepare for manipulation
 the following data set:
 <http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt>
 
+``` r
+temperature <- read_table(
+  "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt",
+  skip = 5,
+  col_names = c("year","no_smoothing","lowess"))
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   year = col_double(),
+    ##   no_smoothing = col_double(),
+    ##   lowess = col_double()
+    ## )
+
+``` r
+temperature
+```
+
+    ## # A tibble: 140 x 3
+    ##     year no_smoothing lowess
+    ##    <dbl>        <dbl>  <dbl>
+    ##  1  1880        -0.16  -0.08
+    ##  2  1881        -0.07  -0.12
+    ##  3  1882        -0.1   -0.16
+    ##  4  1883        -0.17  -0.19
+    ##  5  1884        -0.28  -0.23
+    ##  6  1885        -0.32  -0.25
+    ##  7  1886        -0.3   -0.26
+    ##  8  1887        -0.35  -0.26
+    ##  9  1888        -0.16  -0.26
+    ## 10  1889        -0.09  -0.25
+    ## # … with 130 more rows
+
 ## Question 3:
 
 Plot the trend in global mean temperatures over time. Describe what you
 see in the plot and how you interpret the patterns you observe.
+
+``` r
+temperature %>%
+  ggplot(aes(x = year, y = no_smoothing))+
+  geom_point(aes(y = lowess))
+```
+
+![](climate_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ## Question 4: Evaluating the evidence for a “Pause” in warming?
 
@@ -126,14 +181,67 @@ your arguments?
   - What is the uncertainty in measurment? Resolution of the data?
     Interpretation of missing values?
 
+There are three columns iin the table. i) ‘Time’ in units of ‘year-day’
+ii) ‘greenland\_mass’ in units of ‘Gt’ iii) ‘antarctica\_mass’ in units
+of ‘Gt’
+
+The numbers are from Ice mass measurement by NASA’s GRACE satellites.
+The uncertainty depends on the accuracy of the satellites. The missing
+values indicate a gap between missions during that time.
+
 ## Question 2:
 
 Construct the necessary R code to import this data set as a tidy `Table`
 object.
 
+``` r
+ice <- read_csv("http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv",skip = 10,
+                col_names = c("time","greenland_mass","antarctica_mass"))
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   time = col_double(),
+    ##   greenland_mass = col_double(),
+    ##   antarctica_mass = col_double()
+    ## )
+
+``` r
+ice
+```
+
+    ## # A tibble: 140 x 3
+    ##     time greenland_mass antarctica_mass
+    ##    <dbl>          <dbl>           <dbl>
+    ##  1 2002.          1491.            967.
+    ##  2 2002.          1486.            979.
+    ##  3 2003.          1287.            512.
+    ##  4 2003.          1258.            859.
+    ##  5 2003.          1257.            694.
+    ##  6 2003.          1288.            592.
+    ##  7 2003.          1337.            658.
+    ##  8 2003.          1354.            477.
+    ##  9 2003.          1363.            546.
+    ## 10 2003.          1427.            494.
+    ## # … with 130 more rows
+
 ## Question 3:
 
 Plot the data and describe the trends you observe.
+
+``` r
+ice %>%
+  ggplot(aes(x = time)) + 
+  geom_point(aes(y = greenland_mass), col="blue") +
+  geom_point(aes(y = antarctica_mass), col = "green")
+```
+
+![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+The trend is that both ice mass are decreasing and in each year, there
+is a wave-like shape, meaning a decrease in summer and an increase in
+winter. However, greenland\_mass is decreasing at a faster rate than
+antarctica mass.
 
 # Exercise III: Rising Sea Levels?
 
@@ -153,10 +261,65 @@ Plot the data and describe the trends you observe.
 Construct the necessary R code to import this data set as a tidy `Table`
 object.
 
+``` r
+sea_level <- read_table("http://climate.nasa.gov/system/internal_resources/details/original/121_Global_Sea_Level_Data_File.txt",
+                        skip = 50,
+                        col_names = c("altimeter_type","merged_file_cycle","number_of_observations","number_of_weighted_observations",
+                                      "gmsl_variation_adjustment_not_applied","standard_deviation_of_gmsl_variation_no_adjustment",
+                                      "gmsl_variation_adjustment_applied","standard_deviation_of_gmsl_adjustment",
+                                      "smoothed_gmsl_variation","smoothed_gmsl_variation_removed_signal"))
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   altimeter_type = col_double(),
+    ##   merged_file_cycle = col_double(),
+    ##   number_of_observations = col_double(),
+    ##   number_of_weighted_observations = col_double(),
+    ##   gmsl_variation_adjustment_not_applied = col_double(),
+    ##   standard_deviation_of_gmsl_variation_no_adjustment = col_double(),
+    ##   gmsl_variation_adjustment_applied = col_double(),
+    ##   standard_deviation_of_gmsl_adjustment = col_double(),
+    ##   smoothed_gmsl_variation = col_double(),
+    ##   smoothed_gmsl_variation_removed_signal = col_double()
+    ## )
+
+``` r
+sea_level
+```
+
+    ## # A tibble: 844 x 10
+    ##    altimeter_type merged_file_cyc… number_of_obser… number_of_weigh…
+    ##             <dbl>            <dbl>            <dbl>            <dbl>
+    ##  1              0               14            1993.           419112
+    ##  2              0               15            1993.           456793
+    ##  3              0               16            1993.           414055
+    ##  4              0               17            1993.           465235
+    ##  5              0               18            1993.           463257
+    ##  6              0               19            1993.           458542
+    ##  7            999               20            1993.           464921
+    ##  8              0               21            1993.           459017
+    ##  9              0               22            1993.           467041
+    ## 10              0               23            1993.           464740
+    ## # … with 834 more rows, and 6 more variables:
+    ## #   gmsl_variation_adjustment_not_applied <dbl>,
+    ## #   standard_deviation_of_gmsl_variation_no_adjustment <dbl>,
+    ## #   gmsl_variation_adjustment_applied <dbl>,
+    ## #   standard_deviation_of_gmsl_adjustment <dbl>, smoothed_gmsl_variation <dbl>,
+    ## #   smoothed_gmsl_variation_removed_signal <dbl>
+
 ## Question 3:
 
-Plot the data and describe the trends you
-    observe.
+Plot the data and describe the trends you observe.
+
+``` r
+sea_level %>%
+  ggplot(aes(x = number_of_observations)) +
+  geom_point(aes(y = smoothed_gmsl_variation),col= "blue") +
+  geom_point(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
+```
+
+![](climate_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 # Exercise IV: Arctic Sea Ice?
 
@@ -174,6 +337,11 @@ Plot the data and describe the trends you
 
 Construct the necessary R code to import this data set as a tidy `Table`
 object.
+
+``` r
+#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+#sea_ice
+```
 
 ## Question 3:
 

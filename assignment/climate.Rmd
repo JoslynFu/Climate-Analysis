@@ -1,12 +1,15 @@
 ---
 title: "Climate Exercise"
+<<<<<<< HEAD
 author: "Joslyn Fu & Jiaming Yuan"
+=======
+author: "Joslyn Fu & Kelly Yuan"
+>>>>>>> 3ddd5a132adada8335d77cb89e33e641956bb052
 output: github_document
 ---
 
-
 This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change, 
-
+gkh
 # C02 Trends
 
 First, we exmaine the CO2 trends. 
@@ -33,7 +36,6 @@ We then visualize the data.
 
 ```{r}
 ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
-
 ```
 
 According to the dataset, C02 level usually reaches its annual maximum around May and June, and its minimum around September and Octobor. Based on our research, much of this variation happens because of the role of plants in the carbon cycle. Plants extract CO2 from the atmosphere, along with sunlight and water, to make food and other substances that they need to grow —— this is the process of _photosysthesis_.  Therefore, CO2 in the atmosphere decreases during the growing season and increases during the rest of the year, which leads to maximum buildup in May before photosynthesis begins to take over in the summer time. Photosynthesis, in which plants take up CO2 from the atmosphere and release oxygen, dominates during the growing season (the warmer part of the year). Respiration, by which plants and animals take up oxygen and release CO2, occurs all the time but dominates during the colder months of the year.
@@ -64,7 +66,8 @@ Please see the below dataset table.
 temperature <- read_table(
   "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt",
   skip = 5,
-  col_names = c("year","no_smoothing","lowess"))
+  col_names = c("year","temp","lowess5"))
+
 temperature
 ```
 
@@ -73,8 +76,7 @@ This is the trend in global mean temperatures over time.
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
 ```{r}
 temperature %>%
-  ggplot(aes(x = year, y = no_smoothing))+
-  geom_point(aes(y = lowess))
+  ggplot(aes(x = year, y = temp)) + geom_line()
 ```
 
 According to the graph, the overall trend in global temperature is increasing. Starting from 2012, the increase in global temperature is even 
@@ -133,8 +135,8 @@ Plot the data and describe the trends you observe.
 ```{r}
 ice %>%
   ggplot(aes(x = time)) + 
-  geom_point(aes(y = greenland_mass), col="blue") +
-  geom_point(aes(y = antarctica_mass), col = "green")
+  geom_line(aes(y = greenland_mass), col="blue") +
+  geom_line(aes(y = antarctica_mass), col = "green")
 ```
 
 The trend is that both ice mass are decreasing and in each year, there is a wave-like shape, meaning a decrease in summer and an increase in winter. However, greenland_mass is decreasing at a faster rate than antarctica mass.
@@ -173,8 +175,8 @@ Plot the data and describe the trends you observe.
 ```{r}
 sea_level %>%
   ggplot(aes(x = number_of_observations)) +
-  geom_point(aes(y = smoothed_gmsl_variation),col= "blue") +
-  geom_point(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
+  geom_line(aes(y = smoothed_gmsl_variation),col= "blue") +
+  geom_line(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
 ```
 
 
@@ -197,8 +199,13 @@ sea_level %>%
 Construct the necessary R code to import this data set as a tidy `Table` object.
 
 ```{r}
-#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
-#sea_ice
+
+```
+
+
+```{r}
+sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+sea_ice.head()
 ```
 
 
@@ -232,5 +239,9 @@ Vostok Core, back to 400,000 yrs before present day
 - Plot joined data
 - Describe your conclusions
 
+```{r}
+table <- read_csv(http://cdiac.ornl.gov/trends/co2/ice_core_co2.html)
+table
+```
 
 
