@@ -5,7 +5,7 @@ output: github_document
 ---
 
 
-This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change. 
+This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change. .
 # C02 Trends
 
 First, we exmaine the CO2 trends. 
