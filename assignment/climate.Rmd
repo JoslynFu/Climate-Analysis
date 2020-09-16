@@ -186,12 +186,15 @@ sea_level %>%
 Construct the necessary R code to import this data set as a tidy `Table` object.
 
 ```{r}
-
+library(lubridate)
 ```
 
 
 ```{r}
-#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+sea_ice <- read_csv("https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv",
+                    skip = 2, col_names = c("year","month","day","extent","missing"))
+sea_ice %>%
+  mutate(date = make_date(year, month, day))
 ```
 
 
@@ -199,6 +202,11 @@ Construct the necessary R code to import this data set as a tidy `Table` object.
 
 Plot the data and describe the trends you observe.    
 
+```{r}
+sea_ice %>%
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = extent))
+```
 
 # Exercise V: Longer term trends in CO2 Records
 

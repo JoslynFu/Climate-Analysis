@@ -340,12 +340,71 @@ Construct the necessary R code to import this data set as a tidy `Table`
 object.
 
 ``` r
-#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+library(lubridate)
 ```
+
+    ## 
+    ## Attaching package: 'lubridate'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     date, intersect, setdiff, union
+
+``` r
+sea_ice <- read_csv("https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv",
+                    skip = 2, col_names = c("year","month","day","extent","missing"))
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   year = col_double(),
+    ##   month = col_character(),
+    ##   day = col_character(),
+    ##   extent = col_double(),
+    ##   missing = col_double()
+    ## )
+
+    ## Warning: 13648 parsing failures.
+    ## row col  expected    actual                                                                                                 file
+    ##   1  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   2  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   3  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   4  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   5  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ## ... ... ......... ......... ....................................................................................................
+    ## See problems(...) for more details.
+
+``` r
+sea_ice %>%
+  mutate(date = make_date(year, month, day))
+```
+
+    ## # A tibble: 13,648 x 6
+    ##     year month day   extent missing date      
+    ##    <dbl> <chr> <chr>  <dbl>   <dbl> <date>    
+    ##  1  1978 10    26      10.2       0 1978-10-26
+    ##  2  1978 10    28      10.4       0 1978-10-28
+    ##  3  1978 10    30      10.6       0 1978-10-30
+    ##  4  1978 11    01      10.7       0 1978-11-01
+    ##  5  1978 11    03      10.8       0 1978-11-03
+    ##  6  1978 11    05      11.0       0 1978-11-05
+    ##  7  1978 11    07      11.1       0 1978-11-07
+    ##  8  1978 11    09      11.2       0 1978-11-09
+    ##  9  1978 11    11      11.3       0 1978-11-11
+    ## 10  1978 11    13      11.5       0 1978-11-13
+    ## # … with 13,638 more rows
 
 ## Question 3:
 
 Plot the data and describe the trends you observe.
+
+``` r
+sea_ice %>%
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = extent))
+```
+
+![](climate_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 # Exercise V: Longer term trends in CO2 Records
 
