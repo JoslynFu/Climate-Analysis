@@ -345,7 +345,6 @@ object.
 
 ``` r
 #sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
-#head(sea_ice)
 ```
 
 ## Question 3:
@@ -387,6 +386,29 @@ conclusions
 <!-- end list -->
 
 ``` r
-#table <- read_csv("http://cdiac.ornl.gov/ftp/trends/co2/vostok.icecore.co2")
-#table
+table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2")
 ```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   `*******************************************************************************` = col_character()
+    ## )
+
+``` r
+table
+```
+
+    ## # A tibble: 382 x 1
+    ##    `***************************************************************************…
+    ##    <chr>                                                                        
+    ##  1 *** Historical CO2 Record from the Vostok Ice Core                          …
+    ##  2 ***                                                                         …
+    ##  3 *** Source: J.M. Barnola                                                    …
+    ##  4 ***         D. Raynaud                                                      …
+    ##  5 ***         C. Lorius                                                       …
+    ##  6 ***         Laboratoire de Glaciologie et de Geophysique de l'Environnement …
+    ##  7 ***         38402 Saint Martin d'Heres Cedex, France                        …
+    ##  8 ***                                                                         …
+    ##  9 ***         N. I. Barkov                                                    …
+    ## 10 ***         Arctic and Antarctic Research Institute                         …
+    ## # … with 372 more rows
