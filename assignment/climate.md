@@ -2,17 +2,12 @@ Climate Exercise
 ================
 Joslyn Fu & Kelly Yuan
 
-**This is a climate change excerise by Joslyn and Jiaming to dive into
-how the main indicators of climate change, including C02 trends, global
-temperature change.**
-
------
-
-# CO2 Trends
+This is a climate change excerise by Joslyn and Jiaming to dive into how
+the main indicators of climate change, including C02 trends, global
+temperature change. . \# C02 Trends
 
 First, we exmaine the CO2 trends. This is from the [NASA Climate Change
-Section - Carbon
-Dioxide](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the
+Section](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the
 original data is obtained from the National Oceanic and Atmospheric
 Administration, specifically the Earth System Research Laboratories.
 
@@ -55,17 +50,15 @@ ggplot(co2, aes(x = decimal_date, y = average)) + geom_line()
 
 ![](climate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-## Trend from the Graph
-
 According to the dataset, C02 level usually reaches its annual maximum
 around May and June, and its minimum around September and Octobor. Based
 on our research, much of this variation happens because of the role of
 plants in the carbon cycle. Plants extract CO2 from the atmosphere,
 along with sunlight and water, to make food and other substances that
-they need to grow —— this is the process of **photosysthesis**.
-Therefore, CO2 in the atmosphere decreases during the growing season and
-increases during the rest of the year, which leads to maximum buildup in
-May before photosynthesis begins to take over in the summer time.
+they need to grow —— this is the process of *photosysthesis*. Therefore,
+CO2 in the atmosphere decreases during the growing season and increases
+during the rest of the year, which leads to maximum buildup in May
+before photosynthesis begins to take over in the summer time.
 Photosynthesis, in which plants take up CO2 from the atmosphere and
 release oxygen, dominates during the growing season (the warmer part of
 the year). Respiration, by which plants and animals take up oxygen and
@@ -80,10 +73,20 @@ trend depend on the rolling average?
 # Global Temperatre
 
 After examining CO2 trend, we look into the global temperature data from
-[NASA Global Climate Change Section - Global
-Temperature](http://climate.nasa.gov/vital-signs/global-temperature).
+[NASA Global Climate Change
+Section](http://climate.nasa.gov/vital-signs/global-temperature).
 
-## Dataset Description
+## Question 1:
+
+Describe the data set to the best of your ability given the
+documentation provided. Describe what kind of column each data contains
+and what units it is measured in. Then address our three key questions
+in understanding this data:
+
+  - How are the measurements made? What is the associated measurement
+    uncertainty?
+  - What is the resolution of the data?
+  - Are their missing values? How should they be handled?
 
 The temperature dataset contains information about gobal annual mean
 temperature from 1880 to 2019 relative to 1951-1980 average
@@ -127,6 +130,9 @@ temperature
 
 This is the trend in global mean temperatures over time.
 
+Plot the trend in global mean temperatures over time. Describe what you
+see in the plot and how you interpret the patterns you observe.
+
 ``` r
 temperature %>%
   ggplot(aes(x = year, y = temp)) + geom_line()
@@ -136,7 +142,7 @@ temperature %>%
 
 According to the graph, the overall trend in global temperature is
 increasing. Starting from 2012, the increase in global temperature is
-surging at a higher rate.
+even
 
 ## Question 4: Evaluating the evidence for a “Pause” in warming?
 
@@ -167,17 +173,31 @@ your arguments?
   - Plot the different averages and describe what differences you see
     and why.
 
------
+# Exercise II: Melting Ice Sheets?
 
-# Melting Ice Sheets
+  - Data description: <http://climate.nasa.gov/vital-signs/land-ice/>
+  - Raw data file:
+    <http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv>
 
-The ice loss has been extremely massive over the past years. In order to
-investigate this problem, we look into both **Antarctica** (green line)
-and **Greenland** (blue line) mass data from 2002 [NASA Global Climate
-Change Section - Ice
-Sheets](https://climate.nasa.gov/vital-signs/ice-sheets/).
+## Question 1:
 
-## Dataset Description
+  - Describe the data set: what are the columns and units? Where do the
+    numbers come from?
+  - What is the uncertainty in measurment? Resolution of the data?
+    Interpretation of missing values?
+
+There are three columns iin the table. i) ‘Time’ in units of ‘year-day’
+ii) ‘greenland\_mass’ in units of ‘Gt’ iii) ‘antarctica\_mass’ in units
+of ‘Gt’
+
+The numbers are from Ice mass measurement by NASA’s GRACE satellites.
+The uncertainty depends on the accuracy of the satellites. The missing
+values indicate a gap between missions during that time.
+
+## Question 2:
+
+Construct the necessary R code to import this data set as a tidy `Table`
+object.
 
 ``` r
 ice <- read_csv("http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv",skip = 10,
@@ -210,16 +230,9 @@ ice
     ## 10 2003.          1427.            494.
     ## # … with 130 more rows
 
-There are three columns in the table. i) ‘Time’ in units of ‘year-day’
-ii) ‘greenland\_mass’ in units of ‘Gt’ iii) ‘antarctica\_mass’ in units
-of ‘Gt’
+## Question 3:
 
-The numbers are from Ice mass measurement by NASA’s GRACE satellites.
-The uncertainty depends on the accuracy of the satellites. The missing
-values indicate a gap between missions during that time (from June 2017
-to June 2018).
-
-## Graph
+Plot the data and describe the trends you observe.
 
 ``` r
 ice %>%
@@ -230,21 +243,12 @@ ice %>%
 
 ![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-The trend is that both ice mass are decreasing. In each year, there is a
-wave-like shape, suggesting that there is a decrease in summer and an
-increase in winter. This is due to the natural temperature variation in
-different reasons. However, greenland mass is decreasing at a faster
-rate than antarctica mass. While greenland mass was initially heavier
-than antarctica mass, greenland mass is now less than the antarctica
-mass.
+The trend is that both ice mass are decreasing and in each year, there
+is a wave-like shape, meaning a decrease in summer and an increase in
+winter. However, greenland\_mass is decreasing at a faster rate than
+antarctica mass.
 
-# Rising Sea Level
-
-Rising sea level is another vital indicator of climate change. According
-to NASA, sea level rise is caused primarily by two factors: the added
-water from melting ice sheets and glaciers and the expansion of seawater
-as it warms. We analyze rising sea level from obtain from
-[Na](https://climate.nasa.gov/vital-signs/sea-level/)
+# Exercise III: Rising Sea Levels?
 
   - Data description: <http://climate.nasa.gov/vital-signs/sea-level/>
   - Raw data file:
@@ -340,12 +344,71 @@ Construct the necessary R code to import this data set as a tidy `Table`
 object.
 
 ``` r
-#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+library(lubridate)
 ```
+
+    ## 
+    ## Attaching package: 'lubridate'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     date, intersect, setdiff, union
+
+``` r
+sea_ice <- read_csv("https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv",
+                    skip = 2, col_names = c("year","month","day","extent","missing"))
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   year = col_double(),
+    ##   month = col_character(),
+    ##   day = col_character(),
+    ##   extent = col_double(),
+    ##   missing = col_double()
+    ## )
+
+    ## Warning: 13648 parsing failures.
+    ## row col  expected    actual                                                                                                 file
+    ##   1  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   2  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   3  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   4  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ##   5  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
+    ## ... ... ......... ......... ....................................................................................................
+    ## See problems(...) for more details.
+
+``` r
+sea_ice %>%
+  mutate(date = make_date(year, month, day))
+```
+
+    ## # A tibble: 13,648 x 6
+    ##     year month day   extent missing date      
+    ##    <dbl> <chr> <chr>  <dbl>   <dbl> <date>    
+    ##  1  1978 10    26      10.2       0 1978-10-26
+    ##  2  1978 10    28      10.4       0 1978-10-28
+    ##  3  1978 10    30      10.6       0 1978-10-30
+    ##  4  1978 11    01      10.7       0 1978-11-01
+    ##  5  1978 11    03      10.8       0 1978-11-03
+    ##  6  1978 11    05      11.0       0 1978-11-05
+    ##  7  1978 11    07      11.1       0 1978-11-07
+    ##  8  1978 11    09      11.2       0 1978-11-09
+    ##  9  1978 11    11      11.3       0 1978-11-11
+    ## 10  1978 11    13      11.5       0 1978-11-13
+    ## # … with 13,638 more rows
 
 ## Question 3:
 
 Plot the data and describe the trends you observe.
+
+``` r
+sea_ice %>%
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = extent))
+```
+
+![](climate_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 # Exercise V: Longer term trends in CO2 Records
 
