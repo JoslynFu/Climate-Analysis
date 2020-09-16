@@ -5,13 +5,13 @@ output: github_document
 ---
 
 
+This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change. .
+# C02 Trends
 
-# Unit I: Climate Change Module
+First, we exmaine the CO2 trends. 
+This is from the [NASA Climate Change Section ](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the original data is obtained from the National Oceanic and Atmospheric Administration, specifically the Earth System Research Laboratories.
 
-## Warm-up exercise: Examining CO2 trends in R
-
-- Example from <http://climate.nasa.gov/vital-signs/carbon-dioxide/>
-- Raw data from <ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt>
+The Data is shown below:
 
 ```{r message=FALSE}
 library(tidyverse)
@@ -28,28 +28,22 @@ read_table("https://raw.githubusercontent.com/espm-157/climate-template/master/a
 co2
 ```
 
+We then visualize the data.
 
 ```{r}
 ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
 ```
 
-Which months are the CO2 values at the maximum? Minimum?  Why is this?
-
-Maximum: 5, 6
-Minimum Range 9, 10,
-
-Much of this variation happens because of the role of plants in the carbon cycle. Plants extract CO2 from the atmosphere, along with sunlight and water, to make food and other substances
-that they need to grow.CO2 in the atmosphere decreases during the growing season and increases during the rest of the year, which leads to maximum buildup in April and May before photosynthesis begins to take over in the summer time. Photosynthesis, in which plants take up CO2 from the atmosphere and release oxygen, dominates during the growing season (the warmer part of the year). Respiration, by which plants and animals take up oxygen and release CO2, occurs all the time but dominates during the colder months of the year.
+According to the dataset, C02 level usually reaches its annual maximum around May and June, and its minimum around September and Octobor. Based on our research, much of this variation happens because of the role of plants in the carbon cycle. Plants extract CO2 from the atmosphere, along with sunlight and water, to make food and other substances that they need to grow —— this is the process of _photosysthesis_.  Therefore, CO2 in the atmosphere decreases during the growing season and increases during the rest of the year, which leads to maximum buildup in May before photosynthesis begins to take over in the summer time. Photosynthesis, in which plants take up CO2 from the atmosphere and release oxygen, dominates during the growing season (the warmer part of the year). Respiration, by which plants and animals take up oxygen and release CO2, occurs all the time but dominates during the colder months of the year.
 
 What rolling average is used in computing the "trend" line?  How does the trend depend on the rolling average?
 
 ------------------------
 
-# Exercise I: Temperature Data
+# Global Temperatre 
 
-Each of the last years has consecutively set new records on global climate.  In this section we will analyze global mean temperature data.
+After examining CO2 trend, we look into the global temperature data from [NASA Global Climate Change Section](http://climate.nasa.gov/vital-signs/global-temperature).
 
-Data from: <http://climate.nasa.gov/vital-signs/global-temperature>
 
 ## Question 1:
 
@@ -59,10 +53,10 @@ Describe the data set to the best of your ability given the documentation provid
 - What is the resolution of the data?
 - Are their missing values? How should they be handled?
 
+The temperature dataset contains information about gobal annual mean temperature from 1880 to 2019 relative to 1951-1980 average temperatures. This graph illustrates the change in global surface temperature relative to 1951-1980 average temperatures.
 
-## Question 2:
 
-Construct the necessary R code to import and prepare for manipulation the following data set: <http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt>
+Please see the below dataset table.
 
 ```{r}
 temperature <- read_table(
@@ -73,8 +67,7 @@ temperature <- read_table(
 temperature
 ```
 
-
-## Question 3:
+This is the trend in global mean temperatures over time.
 
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
 ```{r}
@@ -82,7 +75,7 @@ temperature %>%
   ggplot(aes(x = year, y = temp)) + geom_line()
 ```
 
-
+According to the graph, the overall trend in global temperature is increasing. Starting from 2012, the increase in global temperature is even 
 
 ## Question 4: Evaluating the evidence for a "Pause" in warming?
 
@@ -208,7 +201,11 @@ Construct the necessary R code to import this data set as a tidy `Table` object.
 
 ```{r}
 #sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+<<<<<<< HEAD
 #sea_ice.head()
+=======
+#head(sea_ice)
+>>>>>>> cd9fc6b97777cf1454934a7a4d9b417c24cf7f01
 ```
 
 
@@ -243,8 +240,13 @@ Vostok Core, back to 400,000 yrs before present day
 - Describe your conclusions
 
 ```{r}
+<<<<<<< HEAD
 table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2")
 table
+=======
+#table <- read_csv("http://cdiac.ornl.gov/ftp/trends/co2/vostok.icecore.co2")
+#table
+>>>>>>> cd9fc6b97777cf1454934a7a4d9b417c24cf7f01
 ```
 
 

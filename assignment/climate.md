@@ -1,16 +1,17 @@
 Climate Exercise
 ================
-Carl Boettiger & Dana Seidel
+Joslyn Fu & Kelly Yuan
 
-# Unit I: Climate Change Module
+This is a climate change excerise by Joslyn and Jiaming to dive into how
+the main indicators of climate change, including C02 trends, global
+temperature change. . \# C02 Trends
 
-## Warm-up exercise: Examining CO2 trends in R
+First, we exmaine the CO2 trends. This is from the [NASA Climate Change
+Section](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the
+original data is obtained from the National Oceanic and Atmospheric
+Administration, specifically the Earth System Research Laboratories.
 
-  - Example from <http://climate.nasa.gov/vital-signs/carbon-dioxide/>
-  - Raw data from
-    <ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_mm_mlo.txt>
-
-<!-- end list -->
+The Data is shown below:
 
 ``` r
 library(tidyverse)
@@ -41,39 +42,39 @@ co2
     ## 10  1958    12        1959.    315.         315.  316.    NA
     ## # … with 739 more rows
 
+We then visualize the data.
+
 ``` r
 ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
 ```
 
 ![](climate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-Which months are the CO2 values at the maximum? Minimum? Why is this?
-
-Maximum: 5, 6 Minimum Range 9, 10,
-
-Much of this variation happens because of the role of plants in the
-carbon cycle. Plants extract CO2 from the atmosphere, along with
-sunlight and water, to make food and other substances that they need to
-grow.CO2 in the atmosphere decreases during the growing season and
-increases during the rest of the year, which leads to maximum buildup in
-April and May before photosynthesis begins to take over in the summer
-time. Photosynthesis, in which plants take up CO2 from the atmosphere
-and release oxygen, dominates during the growing season (the warmer part
-of the year). Respiration, by which plants and animals take up oxygen
-and release CO2, occurs all the time but dominates during the colder
-months of the year.
+According to the dataset, C02 level usually reaches its annual maximum
+around May and June, and its minimum around September and Octobor. Based
+on our research, much of this variation happens because of the role of
+plants in the carbon cycle. Plants extract CO2 from the atmosphere,
+along with sunlight and water, to make food and other substances that
+they need to grow —— this is the process of *photosysthesis*. Therefore,
+CO2 in the atmosphere decreases during the growing season and increases
+during the rest of the year, which leads to maximum buildup in May
+before photosynthesis begins to take over in the summer time.
+Photosynthesis, in which plants take up CO2 from the atmosphere and
+release oxygen, dominates during the growing season (the warmer part of
+the year). Respiration, by which plants and animals take up oxygen and
+release CO2, occurs all the time but dominates during the colder months
+of the year.
 
 What rolling average is used in computing the “trend” line? How does the
 trend depend on the rolling average?
 
 -----
 
-# Exercise I: Temperature Data
+# Global Temperatre
 
-Each of the last years has consecutively set new records on global
-climate. In this section we will analyze global mean temperature data.
-
-Data from: <http://climate.nasa.gov/vital-signs/global-temperature>
+After examining CO2 trend, we look into the global temperature data from
+[NASA Global Climate Change
+Section](http://climate.nasa.gov/vital-signs/global-temperature).
 
 ## Question 1:
 
@@ -87,24 +88,25 @@ in understanding this data:
   - What is the resolution of the data?
   - Are their missing values? How should they be handled?
 
-## Question 2:
+The temperature dataset contains information about gobal annual mean
+temperature from 1880 to 2019 relative to 1951-1980 average
+temperatures. This graph illustrates the change in global surface
+temperature relative to 1951-1980 average temperatures.
 
-Construct the necessary R code to import and prepare for manipulation
-the following data set:
-<http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt>
+Please see the below dataset table.
 
 ``` r
 temperature <- read_table(
   "http://climate.nasa.gov/system/internal_resources/details/original/647_Global_Temperature_Data_File.txt",
   skip = 5,
-  col_names = c("year","no_smoothing","lowess"))
+  col_names = c("year","temp","lowess5"))
 ```
 
     ## Parsed with column specification:
     ## cols(
     ##   year = col_double(),
-    ##   no_smoothing = col_double(),
-    ##   lowess = col_double()
+    ##   temp = col_double(),
+    ##   lowess5 = col_double()
     ## )
 
 ``` r
@@ -112,32 +114,35 @@ temperature
 ```
 
     ## # A tibble: 140 x 3
-    ##     year no_smoothing lowess
-    ##    <dbl>        <dbl>  <dbl>
-    ##  1  1880        -0.16  -0.08
-    ##  2  1881        -0.07  -0.12
-    ##  3  1882        -0.1   -0.16
-    ##  4  1883        -0.17  -0.19
-    ##  5  1884        -0.28  -0.23
-    ##  6  1885        -0.32  -0.25
-    ##  7  1886        -0.3   -0.26
-    ##  8  1887        -0.35  -0.26
-    ##  9  1888        -0.16  -0.26
-    ## 10  1889        -0.09  -0.25
+    ##     year  temp lowess5
+    ##    <dbl> <dbl>   <dbl>
+    ##  1  1880 -0.16   -0.08
+    ##  2  1881 -0.07   -0.12
+    ##  3  1882 -0.1    -0.16
+    ##  4  1883 -0.17   -0.19
+    ##  5  1884 -0.28   -0.23
+    ##  6  1885 -0.32   -0.25
+    ##  7  1886 -0.3    -0.26
+    ##  8  1887 -0.35   -0.26
+    ##  9  1888 -0.16   -0.26
+    ## 10  1889 -0.09   -0.25
     ## # … with 130 more rows
 
-## Question 3:
+This is the trend in global mean temperatures over time.
 
 Plot the trend in global mean temperatures over time. Describe what you
 see in the plot and how you interpret the patterns you observe.
 
 ``` r
 temperature %>%
-  ggplot(aes(x = year, y = no_smoothing))+
-  geom_point(aes(y = lowess))
+  ggplot(aes(x = year, y = temp)) + geom_line()
 ```
 
 ![](climate_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+According to the graph, the overall trend in global temperature is
+increasing. Starting from 2012, the increase in global temperature is
+even
 
 ## Question 4: Evaluating the evidence for a “Pause” in warming?
 
@@ -232,8 +237,8 @@ Plot the data and describe the trends you observe.
 ``` r
 ice %>%
   ggplot(aes(x = time)) + 
-  geom_point(aes(y = greenland_mass), col="blue") +
-  geom_point(aes(y = antarctica_mass), col = "green")
+  geom_line(aes(y = greenland_mass), col="blue") +
+  geom_line(aes(y = antarctica_mass), col = "green")
 ```
 
 ![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
@@ -315,8 +320,8 @@ Plot the data and describe the trends you observe.
 ``` r
 sea_level %>%
   ggplot(aes(x = number_of_observations)) +
-  geom_point(aes(y = smoothed_gmsl_variation),col= "blue") +
-  geom_point(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
+  geom_line(aes(y = smoothed_gmsl_variation),col= "blue") +
+  geom_line(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
 ```
 
 ![](climate_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
@@ -340,7 +345,7 @@ object.
 
 ``` r
 #sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
-#sea_ice
+#head(sea_ice)
 ```
 
 ## Question 3:
@@ -376,4 +381,12 @@ Vostok Core, back to 400,000 yrs before present day
   - Consider various smoothing windowed averages of the data.
   - Join this series to Mauna Loa data
   - Plot joined data
-  - Describe your conclusions
+  - Describe your
+conclusions
+
+<!-- end list -->
+
+``` r
+#table <- read_csv("http://cdiac.ornl.gov/ftp/trends/co2/vostok.icecore.co2")
+#table
+```
