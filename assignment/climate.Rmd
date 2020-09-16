@@ -207,8 +207,8 @@ Construct the necessary R code to import this data set as a tidy `Table` object.
 
 
 ```{r}
-sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
-sea_ice.head()
+#sea_ice <- read_csv("ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv")
+#sea_ice.head()
 ```
 
 
@@ -243,7 +243,7 @@ Vostok Core, back to 400,000 yrs before present day
 - Describe your conclusions
 
 ```{r}
-table <- read_csv(http://cdiac.ornl.gov/trends/co2/ice_core_co2.html)
+table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2")
 table
 ```
 
