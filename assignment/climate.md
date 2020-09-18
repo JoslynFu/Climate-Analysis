@@ -2,9 +2,13 @@ Climate Exercise
 ================
 Joslyn Fu & Kelly Yuan
 
-This is a climate change excerise by Joslyn and Jiaming to dive into how
-the main indicators of climate change, including C02 trends, global
-temperature change. . \# C02 Trends
+**This is a climate change excerise by Joslyn and Jiaming to dive into
+how the main indicators of climate change, including C02 trends, global
+temperature change.**
+
+-----
+
+# CO2 Trends
 
 First, we exmaine the CO2 trends. This is from the [NASA Climate Change
 Section](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the
@@ -50,6 +54,8 @@ ggplot(co2, aes(x = decimal_date, y = average)) + geom_line()
 
 ![](climate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
+## Trend from the Graph
+
 According to the dataset, C02 level usually reaches its annual maximum
 around May and June, and its minimum around September and Octobor. Based
 on our research, much of this variation happens because of the role of
@@ -76,17 +82,7 @@ After examining CO2 trend, we look into the global temperature data from
 [NASA Global Climate Change
 Section](http://climate.nasa.gov/vital-signs/global-temperature).
 
-## Question 1:
-
-Describe the data set to the best of your ability given the
-documentation provided. Describe what kind of column each data contains
-and what units it is measured in. Then address our three key questions
-in understanding this data:
-
-  - How are the measurements made? What is the associated measurement
-    uncertainty?
-  - What is the resolution of the data?
-  - Are their missing values? How should they be handled?
+## Dataset Description
 
 The temperature dataset contains information about gobal annual mean
 temperature from 1880 to 2019 relative to 1951-1980 average
@@ -130,9 +126,6 @@ temperature
 
 This is the trend in global mean temperatures over time.
 
-Plot the trend in global mean temperatures over time. Describe what you
-see in the plot and how you interpret the patterns you observe.
-
 ``` r
 temperature %>%
   ggplot(aes(x = year, y = temp)) + geom_line()
@@ -142,7 +135,7 @@ temperature %>%
 
 According to the graph, the overall trend in global temperature is
 increasing. Starting from 2012, the increase in global temperature is
-even
+surging at a higher rate.
 
 ## Question 4: Evaluating the evidence for a “Pause” in warming?
 
@@ -173,31 +166,17 @@ your arguments?
   - Plot the different averages and describe what differences you see
     and why.
 
-# Exercise II: Melting Ice Sheets?
+-----
 
-  - Data description: <http://climate.nasa.gov/vital-signs/land-ice/>
-  - Raw data file:
-    <http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv>
+# Melting Ice Sheets
 
-## Question 1:
+The ice loss has been extremely massive over the past years. In order to
+investigate this problem, we look into both **Antarctica** (green line)
+and **Greenland** (blue line) mass data from 2002 [NASA Global Climate
+Change Section - Ice
+Sheets](https://climate.nasa.gov/vital-signs/ice-sheets/).
 
-  - Describe the data set: what are the columns and units? Where do the
-    numbers come from?
-  - What is the uncertainty in measurment? Resolution of the data?
-    Interpretation of missing values?
-
-There are three columns iin the table. i) ‘Time’ in units of ‘year-day’
-ii) ‘greenland\_mass’ in units of ‘Gt’ iii) ‘antarctica\_mass’ in units
-of ‘Gt’
-
-The numbers are from Ice mass measurement by NASA’s GRACE satellites.
-The uncertainty depends on the accuracy of the satellites. The missing
-values indicate a gap between missions during that time.
-
-## Question 2:
-
-Construct the necessary R code to import this data set as a tidy `Table`
-object.
+## Dataset Description
 
 ``` r
 ice <- read_csv("http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv",skip = 10,
@@ -230,9 +209,16 @@ ice
     ## 10 2003.          1427.            494.
     ## # … with 130 more rows
 
-## Question 3:
+There are three columns in the table. i) ‘Time’ in units of ‘year-day’
+ii) ‘greenland\_mass’ in units of ‘Gt’ iii) ‘antarctica\_mass’ in units
+of ‘Gt’
 
-Plot the data and describe the trends you observe.
+The numbers are from Ice mass measurement by NASA’s GRACE satellites.
+The uncertainty depends on the accuracy of the satellites. The missing
+values indicate a gap between missions during that time (from June 2017
+to June 2018).
+
+## Graph
 
 ``` r
 ice %>%
@@ -243,28 +229,30 @@ ice %>%
 
 ![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-The trend is that both ice mass are decreasing and in each year, there
-is a wave-like shape, meaning a decrease in summer and an increase in
-winter. However, greenland\_mass is decreasing at a faster rate than
-antarctica mass.
+The trend is that both ice mass are decreasing. In each year, there is a
+wave-like shape, suggesting that there is a decrease in summer and an
+increase in winter. This is due to the natural temperature variation in
+different reasons. However, greenland mass is decreasing at a faster
+rate than antarctica mass. While greenland mass was initially heavier
+than antarctica mass, greenland mass is now less than the antarctica
+mass.
 
-# Exercise III: Rising Sea Levels?
+-----
 
-  - Data description: <http://climate.nasa.gov/vital-signs/sea-level/>
-  - Raw data file:
-    <http://climate.nasa.gov/system/internal_resources/details/original/121_Global_Sea_Level_Data_File.txt>
+# Rising Sea Level
 
-## Question 1:
+Rising sea level is another vital indicator of climate change. According
+to NASA, sea level rise is caused primarily by two factors: the added
+water from melting ice sheets and glaciers and the expansion of seawater
+as it warms. We analyze rising sea level from the information provided
+by [NASA Global Climate Change Section - Sea
+Level](https://climate.nasa.gov/vital-signs/sea-level/)
 
-  - Describe the data set: what are the columns and units?
-  - Where do these data come from?
-  - What is the uncertainty in measurment? Resolution of the data?
-    Interpretation of missing values?
+## Sea Level Dataset
 
-## Question 2:
-
-Construct the necessary R code to import this data set as a tidy `Table`
-object.
+The data is obtained from Satellite sea level observations. We have data
+from 1993 to present. We give credit to the NASA Goddard Space Flight
+Center.
 
 ``` r
 sea_level <- read_table("http://climate.nasa.gov/system/internal_resources/details/original/121_Global_Sea_Level_Data_File.txt",
@@ -313,9 +301,12 @@ sea_level
     ## #   standard_deviation_of_gmsl_adjustment <dbl>, smoothed_gmsl_variation <dbl>,
     ## #   smoothed_gmsl_variation_removed_signal <dbl>
 
-## Question 3:
+According to the table, GMSL denotes Global Mean Sea Level. We are able
+to see the variations in global mean sea levels and their standard
+deviations. We make the plot below using the smoothed global mean sea
+level variation and the one with removed signal.
 
-Plot the data and describe the trends you observe.
+## Sea Level Graph
 
 ``` r
 sea_level %>%
@@ -326,7 +317,12 @@ sea_level %>%
 
 ![](climate_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-# Exercise IV: Arctic Sea Ice?
+The graph above tracks the change in sea level since 1993 as observed by
+satellites. We can easily see the variation is increasing, suggesting
+that the sea level is rising
+    gradually.
+
+# Arctic Sea Ice
 
   - <http://nsidc.org/data/G02135>
   - <ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv>
@@ -345,7 +341,6 @@ object.
 
 ``` r
 library(lubridate)
-<<<<<<< HEAD
 ```
 
     ## 
@@ -384,46 +379,6 @@ sea_ice %>%
   mutate(date = make_date(year, month, day))
 ```
 
-=======
-```
-
-    ## 
-    ## Attaching package: 'lubridate'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     date, intersect, setdiff, union
-
-``` r
-sea_ice <- read_csv("https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv",
-                    skip = 2, col_names = c("year","month","day","extent","missing"))
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   year = col_double(),
-    ##   month = col_character(),
-    ##   day = col_character(),
-    ##   extent = col_double(),
-    ##   missing = col_double()
-    ## )
-
-    ## Warning: 13648 parsing failures.
-    ## row col  expected    actual                                                                                                 file
-    ##   1  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
-    ##   2  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
-    ##   3  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
-    ##   4  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
-    ##   5  -- 5 columns 6 columns 'https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv'
-    ## ... ... ......... ......... ....................................................................................................
-    ## See problems(...) for more details.
-
-``` r
-sea_ice %>%
-  mutate(date = make_date(year, month, day))
-```
-
->>>>>>> b5e3f9b1d7ac6d66d97eaa4e267585d006071c99
     ## # A tibble: 13,648 x 6
     ##     year month day   extent missing date      
     ##    <dbl> <chr> <chr>  <dbl>   <dbl> <date>    

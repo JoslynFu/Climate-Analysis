@@ -5,8 +5,11 @@ output: github_document
 ---
 
 
-This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change. .
-# C02 Trends
+__This is a climate change excerise by Joslyn and Jiaming to dive into how the main indicators of climate change, including C02 trends, global temperature change.__
+
+------------------------
+
+# CO2 Trends
 
 First, we exmaine the CO2 trends. 
 This is from the [NASA Climate Change Section ](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the original data is obtained from the National Oceanic and Atmospheric Administration, specifically the Earth System Research Laboratories.
@@ -34,6 +37,8 @@ We then visualize the data.
 ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
 ```
 
+## Trend from the Graph
+
 According to the dataset, C02 level usually reaches its annual maximum around May and June, and its minimum around September and Octobor. Based on our research, much of this variation happens because of the role of plants in the carbon cycle. Plants extract CO2 from the atmosphere, along with sunlight and water, to make food and other substances that they need to grow —— this is the process of _photosysthesis_.  Therefore, CO2 in the atmosphere decreases during the growing season and increases during the rest of the year, which leads to maximum buildup in May before photosynthesis begins to take over in the summer time. Photosynthesis, in which plants take up CO2 from the atmosphere and release oxygen, dominates during the growing season (the warmer part of the year). Respiration, by which plants and animals take up oxygen and release CO2, occurs all the time but dominates during the colder months of the year.
 
 What rolling average is used in computing the "trend" line?  How does the trend depend on the rolling average?
@@ -45,16 +50,9 @@ What rolling average is used in computing the "trend" line?  How does the trend 
 After examining CO2 trend, we look into the global temperature data from [NASA Global Climate Change Section](http://climate.nasa.gov/vital-signs/global-temperature).
 
 
-## Question 1:
-
-Describe the data set to the best of your ability given the documentation provided.  Describe what kind of column each data contains and what units it is measured in.  Then address our three key questions in understanding this data:
-
-- How are the measurements made? What is the associated measurement uncertainty?
-- What is the resolution of the data?
-- Are their missing values? How should they be handled?
+## Dataset Description
 
 The temperature dataset contains information about gobal annual mean temperature from 1880 to 2019 relative to 1951-1980 average temperatures. This graph illustrates the change in global surface temperature relative to 1951-1980 average temperatures.
-
 
 Please see the below dataset table.
 
@@ -69,13 +67,13 @@ temperature
 
 This is the trend in global mean temperatures over time.
 
-Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
 ```{r}
 temperature %>%
   ggplot(aes(x = year, y = temp)) + geom_line()
 ```
 
-According to the graph, the overall trend in global temperature is increasing. Starting from 2012, the increase in global temperature is even 
+According to the graph, the overall trend in global temperature is increasing. Starting from 2012, the increase in global temperature is surging at a higher rate. 
+
 
 ## Question 4: Evaluating the evidence for a "Pause" in warming?
 
@@ -92,42 +90,31 @@ What additional analyses or data sources would better help you refine your argum
 - Plot the different averages and describe what differences you see and why.  
 
 
+------------------------
+
+# Melting Ice Sheets
+
+The ice loss has been extremely massive over the past years. In order to investigate this problem, we look into both __Antarctica__ (green line) and __Greenland__ (blue line) mass data from 2002 [NASA Global Climate Change Section - Ice Sheets](https://climate.nasa.gov/vital-signs/ice-sheets/).
+
+## Dataset Description
 
 
-
-# Exercise II: Melting Ice Sheets?
-
-- Data description: <http://climate.nasa.gov/vital-signs/land-ice/>
-- Raw data file: <http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv>
-
-## Question 1:
-
-- Describe the data set: what are the columns and units? Where do the numbers come from? 
-- What is the uncertainty in measurment? Resolution of the data? Interpretation of missing values?
-
-There are three columns iin the table. 
-i) 'Time' in units of 'year-day'
-ii) 'greenland_mass' in units of 'Gt'
-iii) 'antarctica_mass' in units of 'Gt'
-
-The numbers are from Ice mass measurement by NASA's GRACE satellites.
-The uncertainty depends on the accuracy of the satellites. The missing values indicate a gap between missions during that time.
-
-
-
-## Question 2:
-
-Construct the necessary R code to import this data set as a tidy `Table` object.
 ```{r}
 ice <- read_csv("http://climate.nasa.gov/system/internal_resources/details/original/499_GRN_ANT_mass_changes.csv",skip = 10,
                 col_names = c("time","greenland_mass","antarctica_mass"))
 ice
 ```
 
+There are three columns in the table. 
+i) 'Time' in units of 'year-day'
+ii) 'greenland_mass' in units of 'Gt'
+iii) 'antarctica_mass' in units of 'Gt'
 
-## Question 3:
+The numbers are from Ice mass measurement by NASA's GRACE satellites.
+The uncertainty depends on the accuracy of the satellites. The missing values indicate a gap between missions during that time (from June 2017 to June 2018).
 
-Plot the data and describe the trends you observe.
+## Graph
+
 ```{r}
 ice %>%
   ggplot(aes(x = time)) + 
@@ -135,25 +122,20 @@ ice %>%
   geom_line(aes(y = antarctica_mass), col = "green")
 ```
 
-The trend is that both ice mass are decreasing and in each year, there is a wave-like shape, meaning a decrease in summer and an increase in winter. However, greenland_mass is decreasing at a faster rate than antarctica mass.
+The trend is that both ice mass are decreasing. In each year, there is a wave-like shape, suggesting that there is a decrease in summer and an increase in winter. This is due to the natural temperature variation in different reasons. However, greenland mass is decreasing at a faster rate than antarctica mass. While greenland mass was initially heavier than antarctica mass, greenland mass is now less than the antarctica mass.
+
+------------------------
+
+# Rising Sea Level
+
+Rising sea level is another vital indicator of climate change. According to NASA, sea level rise is caused primarily by two factors: the added water from melting ice sheets and glaciers and the expansion of seawater as it warms. We analyze rising sea level from the information provided by [NASA Global Climate Change Section - Sea Level](https://climate.nasa.gov/vital-signs/sea-level/)
 
 
-# Exercise III: Rising Sea Levels?
+## Sea Level Dataset
 
-- Data description: <http://climate.nasa.gov/vital-signs/sea-level/>
-- Raw data file: <http://climate.nasa.gov/system/internal_resources/details/original/121_Global_Sea_Level_Data_File.txt>
-
-
-## Question 1:
-
-- Describe the data set: what are the columns and units? 
-- Where do these data come from? 
-- What is the uncertainty in measurment? Resolution of the data? Interpretation of missing values?
+The data is obtained from Satellite sea level observations. We have data from 1993 to present. We give credit to the NASA Goddard Space Flight Center.
 
 
-## Question 2:
-
-Construct the necessary R code to import this data set as a tidy `Table` object.
 ```{r}
 sea_level <- read_table("http://climate.nasa.gov/system/internal_resources/details/original/121_Global_Sea_Level_Data_File.txt",
                         skip = 50,
@@ -165,9 +147,10 @@ sea_level
 ```
 
 
-## Question 3:
+According to the table, GMSL denotes Global Mean Sea Level. We are able to see the variations in global mean sea levels and their standard deviations. We make the plot below using the smoothed global mean sea level variation and the one with removed signal.
 
-Plot the data and describe the trends you observe.
+## Sea Level Graph
+
 ```{r}
 sea_level %>%
   ggplot(aes(x = number_of_observations)) +
@@ -175,9 +158,9 @@ sea_level %>%
   geom_line(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
 ```
 
+The graph above tracks the change in sea level since 1993 as observed by satellites. We can easily see the variation is increasing, suggesting that the sea level is rising gradually.
 
-
-# Exercise IV: Arctic Sea Ice?
+# Arctic Sea Ice
 
 - <http://nsidc.org/data/G02135>
 - <ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv>
