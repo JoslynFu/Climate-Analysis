@@ -18,6 +18,6 @@ This is a project by Joslyn and Kelly to explore global temperature data. We aim
 ### Longer Term Trends in CO2 Records
 
 Please find our rmd and md files in the assignment folder.
-Hope you enjoy reading out code and analysis :)
+Hope you enjoy reading our code and analysis :)
 
 
