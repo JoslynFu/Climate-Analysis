@@ -201,7 +201,7 @@ temperature %>%
 
     ## Warning: Removed 4 row(s) containing missing values (geom_path).
 
-![](climate_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ``` r
 temperature %>%
@@ -211,7 +211,7 @@ temperature %>%
 
     ## Warning: Removed 9 row(s) containing missing values (geom_path).
 
-![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 temperature %>%
@@ -221,7 +221,7 @@ temperature %>%
 
     ## Warning: Removed 19 row(s) containing missing values (geom_path).
 
-![](climate_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 The differences among these three graphs are very significant due to the
 different means I have on the y-axis. When we increase the time window,
@@ -290,7 +290,7 @@ ice %>%
   geom_line(aes(y = antarctica_mass), col = "red")
 ```
 
-![](climate_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 The trend is that both ice mass are decreasing. In each year, there is a
 wave-like shape, suggesting that there is a decrease in summer and an
@@ -378,7 +378,7 @@ sea_level %>%
   geom_line(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
 ```
 
-![](climate_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 The graph above tracks the change in sea level since 1993 as observed by
 satellites. We can easily see the variation is increasing, suggesting
@@ -491,7 +491,7 @@ avg_sea_ice%>%
   ggplot(aes(x= year,y=avg_extent))+geom_line()
 ```
 
-![](climate_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ## Question 3:
 
@@ -532,29 +532,7 @@ conclusions
 <!-- end list -->
 
 ``` r
-table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",skip=15)
+#table <- read.fwf("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",
+#                  sep = "\\",skip=21,col.names = c("depth","age of the ice","age of the air","co2 concentration"))
+#table
 ```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   `*******************************************************************************` = col_character()
-    ## )
-
-``` r
-table
-```
-
-    ## # A tibble: 367 x 1
-    ##    `***************************************************************************…
-    ##    <chr>                                                                        
-    ##  1 "Mean"                                                                       
-    ##  2 "Age of   age of    CO2"                                                     
-    ##  3 "Depth  the ice  the air concentration"                                      
-    ##  4 "(m)   (yr BP)  (yr BP)  (ppmv)"                                             
-    ##  5 "149.1\t5679\t2342\t284.7"                                                   
-    ##  6 "173.1\t6828\t3634\t272.8"                                                   
-    ##  7 "177.4\t7043\t3833\t268.1"                                                   
-    ##  8 "228.6\t9523\t6220\t262.2"                                                   
-    ##  9 "250.3\t10579\t7327\t254.6"                                                  
-    ## 10 "266\t11334\t8113\t259.6"                                                    
-    ## # … with 357 more rows

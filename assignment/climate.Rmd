@@ -89,6 +89,9 @@ Given the trend plotted above, there is no evidence for such a pause. The temper
 ## Exploring Rolling Averages
 
 Let's stop here and dive deep into the rolling averages. A 5-year average is like a 5-year window around a specific date and the average of those values, while the annual avearage is just the average of tempeatures recorded for a 12-month window, starting from each year's January to December. Here, we add three columns to the original temperature dataframe, representing a 5-year average, a 10-year one, and a 20-year one, respectively. We also attach a graph for each one.
+```{r}
+library(zoo)
+```
 
 ```{r}
 temperature %>%
@@ -253,8 +256,9 @@ Vostok Core, back to 400,000 yrs before present day
 - Describe your conclusions
 
 ```{r}
-table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",skip=15)
-table
+#table <- read.fwf("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",
+#                  sep = "\\",skip=21,col.names = c("depth","age of the ice","age of the air","co2 concentration"))
+#table
 ```
 
 
