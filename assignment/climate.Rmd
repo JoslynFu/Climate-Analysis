@@ -12,6 +12,9 @@ __This is a climate change excerise by Joslyn and Jiaming to dive into how the m
 # CO2 Trends
 
 First, we exmaine the CO2 trends. 
+
+## Dataset Description 
+
 This is from the [NASA Climate Change Section ](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the original data is obtained from the National Oceanic and Atmospheric Administration, specifically the Earth System Research Laboratories.
 
 The Data is shown below:
@@ -31,17 +34,18 @@ read_table("https://raw.githubusercontent.com/espm-157/climate-template/master/a
 co2
 ```
 
-We then visualize the data.
+We then visualize the data. We use the interpolated column as Y because it will omit gaps.
 
 ```{r}
-ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
+ggplot(co2, aes(x = decimal_date, y = trend)) + geom_line() 
 ```
 
 ## Trend from the Graph
 
 According to the dataset, C02 level usually reaches its annual maximum around May and June, and its minimum around September and Octobor. Based on our research, much of this variation happens because of the role of plants in the carbon cycle. Plants extract CO2 from the atmosphere, along with sunlight and water, to make food and other substances that they need to grow —— this is the process of _photosysthesis_.  Therefore, CO2 in the atmosphere decreases during the growing season and increases during the rest of the year, which leads to maximum buildup in May before photosynthesis begins to take over in the summer time. Photosynthesis, in which plants take up CO2 from the atmosphere and release oxygen, dominates during the growing season (the warmer part of the year). Respiration, by which plants and animals take up oxygen and release CO2, occurs all the time but dominates during the colder months of the year.
 
-What rolling average is used in computing the "trend" line?  How does the trend depend on the rolling average?
+In computing the "average" column, the scientists use the monthly mean CO2 mole fraction determined from daily averages. The "interpolated" column includes average values from the "average" column and interpolated values where data are missing. Based on the information given by NASA, in calculating the interpolated value, they use a 7-year rolling avearage. Then for the "trend" line, they determine the "trend"value for each month by removing the seasonal cycle.
+
 
 ------------------------
 
@@ -65,6 +69,8 @@ temperature <- read_table(
 temperature
 ```
 
+## Temperature Graph
+
 This is the trend in global mean temperatures over time.
 
 ```{r}
@@ -74,21 +80,37 @@ temperature %>%
 
 According to the graph, the overall trend in global temperature is increasing. Starting from 2012, the increase in global temperature is surging at a higher rate. 
 
+## A Possible Pause?
 
-## Question 4: Evaluating the evidence for a "Pause" in warming?
+The [2013 IPCC Report](https://www.ipcc.ch/pdf/assessment-report/ar5/wg1/WG1AR5_SummaryVolume_FINAL.pdf) included a tentative observation of a "much smaller increasing trend" in global mean temperatures since 1998 than was observed previously.  This led to much discussion in the media about the existence of a "Pause" or "Hiatus" in global warming rates, as well as much research looking into where the extra heat could have gone.  (Examples discussing this question include articles in [The Guardian](http://www.theguardian.com/environment/2015/jun/04/global-warming-hasnt-paused-study-finds), [BBC News](http://www.bbc.com/news/science-environment-28870988), and [Wikipedia](https://en.wikipedia.org/wiki/Global_warming_hiatus)).
 
-The [2013 IPCC Report](https://www.ipcc.ch/pdf/assessment-report/ar5/wg1/WG1AR5_SummaryVolume_FINAL.pdf) included a tentative observation of a "much smaller increasing trend" in global mean temperatures since 1998 than was observed previously.  This led to much discussion in the media about the existence of a "Pause" or "Hiatus" in global warming rates, as well as much research looking into where the extra heat could have gone.  (Examples discussing this question include articles in [The Guardian](http://www.theguardian.com/environment/2015/jun/04/global-warming-hasnt-paused-study-finds), [BBC News](http://www.bbc.com/news/science-environment-28870988), and [Wikipedia](https://en.wikipedia.org/wiki/Global_warming_hiatus)). 
+Given the trend plotted above, there is no evidence for such a pause. The temperature keeps rising since the early 1960s with faster pace. It took about 40 years from 1960 to 2000 to rise from below 0 Celsius degree to 0.5  Celsius degree; however, to rise from 0.5 to 1 Celsius degree, it took less than 20 years. These are just rough estimates based on the graph. If we're given more data that focuses on the difference among each year/decade, we can appraoch the truth of pause more accurately.
 
-By examining the data here, what evidence do you find or not find for such a pause?  Present an analysis of this data (using the tools & methods we have covered in Foundation course so far) to argue your case.  
+## Exploring Rolling Averages
 
-What additional analyses or data sources would better help you refine your arguments?
+Let's stop here and dive deep into the rolling averages. A 5-year average is like a 5-year window around a specific date and the average of those values, while the annual avearage is just the average of tempeatures recorded for a 12-month window, starting from each year's January to December. Here, we add three columns to the original temperature dataframe, representing a 5-year average, a 10-year one, and a 20-year one, respectively. We also attach a graph for each one.
 
-## Question 5: Rolling averages
-    
-- What is the meaning of "5 year average" vs "annual average"?
-- Construct 5 year averages from the annual data.  Construct 10 & 20-year averages. 
-- Plot the different averages and describe what differences you see and why.  
+```{r}
+library(zoo)
 
+temperature %>%
+  mutate(ave5 = rollmean(temp,5, na.pad=TRUE, align="right")) %>%
+  ggplot(aes(x = year, y = ave5)) + geom_line()
+```
+
+```{r}
+temperature %>%
+  mutate(ave10 = rollmean(temp,10, na.pad=TRUE, align="right"))%>%
+  ggplot(aes(x = year, y = ave10)) + geom_line()
+```
+
+```{r}
+temperature %>%
+  mutate(ave20 = rollmean(temp,20, na.pad=TRUE, align="right"))%>%
+  ggplot(aes(x = year, y = ave20)) + geom_line()
+```
+
+The differences among these three graphs are very significant due to the different means I have on the y-axis. When we increase the time window, the trend would generally grow flat and smooth. This is because as we even out the temperatrue over a larger time window, the difference between 2 time window would be smaller. 
 
 ------------------------
 
@@ -113,13 +135,13 @@ iii) 'antarctica_mass' in units of 'Gt'
 The numbers are from Ice mass measurement by NASA's GRACE satellites.
 The uncertainty depends on the accuracy of the satellites. The missing values indicate a gap between missions during that time (from June 2017 to June 2018).
 
-## Graph
+## Ice Graph for Both Two Masses
 
 ```{r}
 ice %>%
   ggplot(aes(x = time)) + 
   geom_line(aes(y = greenland_mass), col="blue") +
-  geom_line(aes(y = antarctica_mass), col = "green")
+  geom_line(aes(y = antarctica_mass), col = "red")
 ```
 
 The trend is that both ice mass are decreasing. In each year, there is a wave-like shape, suggesting that there is a decrease in summer and an increase in winter. This is due to the natural temperature variation in different reasons. However, greenland mass is decreasing at a faster rate than antarctica mass. While greenland mass was initially heavier than antarctica mass, greenland mass is now less than the antarctica mass.
@@ -177,26 +199,34 @@ The graph above tracks the change in sea level since 1993 as observed by satelli
 
 Construct the necessary R code to import this data set as a tidy `Table` object.
 ```{r}
+library(dplyr)
 library(lubridate)
 ```
 
 ```{r}
 sea_ice <- read_csv("https://github.com/espm-157/climate-template/releases/download/data/N_seaice_extent_daily_v3.0.csv",
                     skip = 2, col_names = c("year","month","day","extent","missing"))
-sea_ice %>%
-  mutate(date = make_date(year, month, day))
+sea_ice
 ```
 
+```{r}
+avg_sea_ice <- sea_ice %>% 
+  mutate(date = make_date(year, month, day)) %>%
+  group_by(year(date)) %>%
+  summarize(avg_extent = mean(extent, na.rm = TRUE))
+
+avg_sea_ice
+```
+
+```{r}
+names(avg_sea_ice)[1] <- "year"
+avg_sea_ice%>%
+  ggplot(aes(x= year,y=avg_extent))+geom_line()
+```
 
 ## Question 3:
 
-Plot the data and describe the trends you observe.    
-
-```{r}
-sea_ice %>%
-  ggplot(aes(x = year)) + 
-  geom_point(aes(y = extent))
-```
+Plot the data and describe the trends you observe.  
 
 
 # Exercise V: Longer term trends in CO2 Records
@@ -225,7 +255,7 @@ Vostok Core, back to 400,000 yrs before present day
 - Describe your conclusions
 
 ```{r}
-table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2")
+table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",skip=15)
 table
 ```
 

@@ -10,7 +10,11 @@ temperature change.**
 
 # CO2 Trends
 
-First, we exmaine the CO2 trends. This is from the [NASA Climate Change
+First, we exmaine the CO2 trends.
+
+## Dataset Description
+
+This is from the [NASA Climate Change
 Section](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the
 original data is obtained from the National Oceanic and Atmospheric
 Administration, specifically the Earth System Research Laboratories.
@@ -46,10 +50,11 @@ co2
     ## 10  1958    12        1959.    315.         315.  316.    NA
     ## # … with 739 more rows
 
-We then visualize the data.
+We then visualize the data. We use the interpolated column as Y because
+it will omit gaps.
 
 ``` r
-ggplot(co2, aes(x = decimal_date, y = average)) + geom_line() 
+ggplot(co2, aes(x = decimal_date, y = trend)) + geom_line() 
 ```
 
 ![](climate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
@@ -71,8 +76,13 @@ the year). Respiration, by which plants and animals take up oxygen and
 release CO2, occurs all the time but dominates during the colder months
 of the year.
 
-What rolling average is used in computing the “trend” line? How does the
-trend depend on the rolling average?
+In computing the “average” column, the scientists use the monthly mean
+CO2 mole fraction determined from daily averages. The “interpolated”
+column includes average values from the “average” column and
+interpolated values where data are missing. Based on the information
+given by NASA, in calculating the interpolated value, they use a 7-year
+rolling avearage. Then for the “trend” line, they determine the
+“trend”value for each month by removing the seasonal cycle.
 
 -----
 
@@ -124,6 +134,8 @@ temperature
     ## 10  1889 -0.09   -0.25
     ## # … with 130 more rows
 
+## Temperature Graph
+
 This is the trend in global mean temperatures over time.
 
 ``` r
@@ -137,7 +149,7 @@ According to the graph, the overall trend in global temperature is
 increasing. Starting from 2012, the increase in global temperature is
 surging at a higher rate.
 
-## Question 4: Evaluating the evidence for a “Pause” in warming?
+## A Possible Pause?
 
 The [2013 IPCC
 Report](https://www.ipcc.ch/pdf/assessment-report/ar5/wg1/WG1AR5_SummaryVolume_FINAL.pdf)
@@ -151,20 +163,71 @@ Guardian](http://www.theguardian.com/environment/2015/jun/04/global-warming-hasn
 [BBC News](http://www.bbc.com/news/science-environment-28870988), and
 [Wikipedia](https://en.wikipedia.org/wiki/Global_warming_hiatus)).
 
-By examining the data here, what evidence do you find or not find for
-such a pause? Present an analysis of this data (using the tools &
-methods we have covered in Foundation course so far) to argue your case.
+Given the trend plotted above, there is no evidence for such a pause.
+The temperature keeps rising since the early 1960s with faster pace. It
+took about 40 years from 1960 to 2000 to rise from below 0 Celsius
+degree to 0.5 Celsius degree; however, to rise from 0.5 to 1 Celsius
+degree, it took less than 20 years. These are just rough estimates based
+on the graph. If we’re given more data that focuses on the difference
+among each year/decade, we can appraoch the truth of pause more
+accurately.
 
-What additional analyses or data sources would better help you refine
-your arguments?
+## Exploring Rolling Averages
 
-## Question 5: Rolling averages
+Let’s stop here and dive deep into the rolling averages. A 5-year
+average is like a 5-year window around a specific date and the average
+of those values, while the annual avearage is just the average of
+tempeatures recorded for a 12-month window, starting from each year’s
+January to December. Here, we add three columns to the original
+temperature dataframe, representing a 5-year average, a 10-year one, and
+a 20-year one, respectively. We also attach a graph for each one.
 
-  - What is the meaning of “5 year average” vs “annual average”?
-  - Construct 5 year averages from the annual data. Construct 10 &
-    20-year averages.
-  - Plot the different averages and describe what differences you see
-    and why.
+``` r
+library(zoo)
+```
+
+    ## 
+    ## Attaching package: 'zoo'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     as.Date, as.Date.numeric
+
+``` r
+temperature %>%
+  mutate(ave5 = rollmean(temp,5, na.pad=TRUE, align="right")) %>%
+  ggplot(aes(x = year, y = ave5)) + geom_line()
+```
+
+    ## Warning: Removed 4 row(s) containing missing values (geom_path).
+
+![](climate_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+temperature %>%
+  mutate(ave10 = rollmean(temp,10, na.pad=TRUE, align="right"))%>%
+  ggplot(aes(x = year, y = ave10)) + geom_line()
+```
+
+    ## Warning: Removed 9 row(s) containing missing values (geom_path).
+
+![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+``` r
+temperature %>%
+  mutate(ave20 = rollmean(temp,20, na.pad=TRUE, align="right"))%>%
+  ggplot(aes(x = year, y = ave20)) + geom_line()
+```
+
+    ## Warning: Removed 19 row(s) containing missing values (geom_path).
+
+![](climate_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+The differences among these three graphs are very significant due to the
+different means I have on the y-axis. When we increase the time window,
+the trend would generally grow flat and smooth. This is because as we
+even out the temperatrue over a larger time window, the difference
+between 2 time window would be smaller.
 
 -----
 
@@ -218,16 +281,16 @@ The uncertainty depends on the accuracy of the satellites. The missing
 values indicate a gap between missions during that time (from June 2017
 to June 2018).
 
-## Graph
+## Ice Graph for Both Two Masses
 
 ``` r
 ice %>%
   ggplot(aes(x = time)) + 
   geom_line(aes(y = greenland_mass), col="blue") +
-  geom_line(aes(y = antarctica_mass), col = "green")
+  geom_line(aes(y = antarctica_mass), col = "red")
 ```
 
-![](climate_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 The trend is that both ice mass are decreasing. In each year, there is a
 wave-like shape, suggesting that there is a decrease in summer and an
@@ -315,7 +378,7 @@ sea_level %>%
   geom_line(aes(y = smoothed_gmsl_variation_removed_signal),col= "red")
 ```
 
-![](climate_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](climate_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 The graph above tracks the change in sea level since 1993 as observed by
 satellites. We can easily see the variation is increasing, suggesting
@@ -340,6 +403,7 @@ Construct the necessary R code to import this data set as a tidy `Table`
 object.
 
 ``` r
+library(dplyr)
 library(lubridate)
 ```
 
@@ -375,36 +439,63 @@ sea_ice <- read_csv("https://github.com/espm-157/climate-template/releases/downl
     ## See problems(...) for more details.
 
 ``` r
-sea_ice %>%
-  mutate(date = make_date(year, month, day))
+sea_ice
 ```
 
-    ## # A tibble: 13,648 x 6
-    ##     year month day   extent missing date      
-    ##    <dbl> <chr> <chr>  <dbl>   <dbl> <date>    
-    ##  1  1978 10    26      10.2       0 1978-10-26
-    ##  2  1978 10    28      10.4       0 1978-10-28
-    ##  3  1978 10    30      10.6       0 1978-10-30
-    ##  4  1978 11    01      10.7       0 1978-11-01
-    ##  5  1978 11    03      10.8       0 1978-11-03
-    ##  6  1978 11    05      11.0       0 1978-11-05
-    ##  7  1978 11    07      11.1       0 1978-11-07
-    ##  8  1978 11    09      11.2       0 1978-11-09
-    ##  9  1978 11    11      11.3       0 1978-11-11
-    ## 10  1978 11    13      11.5       0 1978-11-13
+    ## # A tibble: 13,648 x 5
+    ##     year month day   extent missing
+    ##    <dbl> <chr> <chr>  <dbl>   <dbl>
+    ##  1  1978 10    26      10.2       0
+    ##  2  1978 10    28      10.4       0
+    ##  3  1978 10    30      10.6       0
+    ##  4  1978 11    01      10.7       0
+    ##  5  1978 11    03      10.8       0
+    ##  6  1978 11    05      11.0       0
+    ##  7  1978 11    07      11.1       0
+    ##  8  1978 11    09      11.2       0
+    ##  9  1978 11    11      11.3       0
+    ## 10  1978 11    13      11.5       0
     ## # … with 13,638 more rows
+
+``` r
+avg_sea_ice <- sea_ice %>% 
+  mutate(date = make_date(year, month, day)) %>%
+  group_by(year(date)) %>%
+  summarize(avg_extent = mean(extent, na.rm = TRUE))
+```
+
+    ## `summarise()` ungrouping output (override with `.groups` argument)
+
+``` r
+avg_sea_ice
+```
+
+    ## # A tibble: 43 x 2
+    ##    `year(date)` avg_extent
+    ##           <dbl>      <dbl>
+    ##  1         1978       12.5
+    ##  2         1979       12.3
+    ##  3         1980       12.3
+    ##  4         1981       12.1
+    ##  5         1982       12.4
+    ##  6         1983       12.3
+    ##  7         1984       11.9
+    ##  8         1985       12.0
+    ##  9         1986       12.2
+    ## 10         1987       11.4
+    ## # … with 33 more rows
+
+``` r
+names(avg_sea_ice)[1] <- "year"
+avg_sea_ice%>%
+  ggplot(aes(x= year,y=avg_extent))+geom_line()
+```
+
+![](climate_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 ## Question 3:
 
 Plot the data and describe the trends you observe.
-
-``` r
-sea_ice %>%
-  ggplot(aes(x = year)) + 
-  geom_point(aes(y = extent))
-```
-
-![](climate_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 # Exercise V: Longer term trends in CO2 Records
 
@@ -441,7 +532,7 @@ conclusions
 <!-- end list -->
 
 ``` r
-table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2")
+table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",skip=15)
 ```
 
     ## Parsed with column specification:
@@ -453,17 +544,17 @@ table <- read_table("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecor
 table
 ```
 
-    ## # A tibble: 382 x 1
+    ## # A tibble: 367 x 1
     ##    `***************************************************************************…
     ##    <chr>                                                                        
-    ##  1 *** Historical CO2 Record from the Vostok Ice Core                          …
-    ##  2 ***                                                                         …
-    ##  3 *** Source: J.M. Barnola                                                    …
-    ##  4 ***         D. Raynaud                                                      …
-    ##  5 ***         C. Lorius                                                       …
-    ##  6 ***         Laboratoire de Glaciologie et de Geophysique de l'Environnement …
-    ##  7 ***         38402 Saint Martin d'Heres Cedex, France                        …
-    ##  8 ***                                                                         …
-    ##  9 ***         N. I. Barkov                                                    …
-    ## 10 ***         Arctic and Antarctic Research Institute                         …
-    ## # … with 372 more rows
+    ##  1 "Mean"                                                                       
+    ##  2 "Age of   age of    CO2"                                                     
+    ##  3 "Depth  the ice  the air concentration"                                      
+    ##  4 "(m)   (yr BP)  (yr BP)  (ppmv)"                                             
+    ##  5 "149.1\t5679\t2342\t284.7"                                                   
+    ##  6 "173.1\t6828\t3634\t272.8"                                                   
+    ##  7 "177.4\t7043\t3833\t268.1"                                                   
+    ##  8 "228.6\t9523\t6220\t262.2"                                                   
+    ##  9 "250.3\t10579\t7327\t254.6"                                                  
+    ## 10 "266\t11334\t8113\t259.6"                                                    
+    ## # … with 357 more rows
