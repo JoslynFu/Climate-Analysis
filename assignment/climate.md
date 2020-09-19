@@ -182,20 +182,25 @@ January to December. Here, we add three columns to the original
 temperature dataframe, representing a 5-year average, a 10-year one, and
 a 20-year one, respectively. We also attach a graph for each one.
 
+To find the rolling average, we first need to install its corresponding
+package:
+
 ``` r
-library(zoo)
+install.packages("RcppRoll")
 ```
 
-    ## 
-    ## Attaching package: 'zoo'
+    ## Installing package into '/usr/local/lib/R/site-library'
+    ## (as 'lib' is unspecified)
 
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     as.Date, as.Date.numeric
+``` r
+library("RcppRoll")
+```
+
+And then, it’s time to draw\!
 
 ``` r
 temperature %>%
-  mutate(ave5 = rollmean(temp,5, na.pad=TRUE, align="right")) %>%
+  mutate(ave5 = roll_mean(temp,5,fill=NA)) %>%
   ggplot(aes(x = year, y = ave5)) + geom_line()
 ```
 
@@ -205,7 +210,7 @@ temperature %>%
 
 ``` r
 temperature %>%
-  mutate(ave10 = rollmean(temp,10, na.pad=TRUE, align="right"))%>%
+  mutate(ave10 = roll_mean(temp,10,fill=NA))%>%
   ggplot(aes(x = year, y = ave10)) + geom_line()
 ```
 
@@ -215,7 +220,7 @@ temperature %>%
 
 ``` r
 temperature %>%
-  mutate(ave20 = rollmean(temp,20, na.pad=TRUE, align="right"))%>%
+  mutate(ave20 = roll_mean(temp,20,fill=NA))%>%
   ggplot(aes(x = year, y = ave20)) + geom_line()
 ```
 
