@@ -15,8 +15,6 @@ This is a project by Joslyn and Kelly to explore global temperature data. We aim
 
 ### Arctic Sea Ice
 
-### Longer Term Trends in CO2 Records
-
 Please find our climate.Rmd and climate.md files in the assignment folder.
 Hope you enjoy reading our code and analysis :)
 
