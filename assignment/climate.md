@@ -7,6 +7,25 @@ how the main indicators of climate change, including C02 trends, global
 temperature change, melting ice sheets, rising sea level, and reducing
 arctic sea ice.**
 
+According to [United
+Nations](https://www.un.org/en/sections/issues-depth/climate-change/),
+Climate Change is the defining issue of our time and we are at a
+defining moment.
+
+There are some basic well-established scientific links:
+
+  - The concentration of GHGs in the earth’s atmosphere is directly
+    linked to the average global temperature on Earth.
+  - The concentration has been rising steadily, and mean global
+    temperatures along with it, since the time of the Industrial
+    Revolution.
+  - The most abundant GHG, accounting for about two-thirds of GHGs,
+    carbon dioxide (CO2), is largely the product of burning fossil
+    fuels.
+
+Since CO2 plays such a pivotal role, let’s look into CO2 concentration
+trend.
+
 -----
 
 # CO2 Trends
@@ -521,3 +540,28 @@ From various vital indicators, the climate is changing in a highly
 observable trend\! We can see an increase in CO2, an increase in
 temperature, a decrease in ice sheet weight, an increase in sea level,
 decrease in artic sea ice size.
+
+From shifting weather patterns that threaten food production, to rising
+sea levels that increase the risk of catastrophic flooding, the impacts
+of climate change are global in scope and unprecedented in scale.
+
+## Action Required\!
+
+At the very end of this project, we offer some tips what we can do to
+save our mother Earth. (Some ideas from:
+<https://newint.org/features/2019/07/01/can-i-do-stop-climate-change>)
+
+  - **Adjust your diet\!** Cut out meat and dairy, especially beef and
+    lamb. And make sure you eat everything that you buy: food waste
+    accounts for eight per cent of greenhouse gas emissions, according
+    to the UN Food and Agriculture Organization. Avoid air-freighted
+    food, such as vegetables like berries, mange-tout or asparagus, when
+    they are out of season.
+
+  - **Talk about it\!** Cutting carbon won’t signal the climate
+    emergency if no-one knows you are doing it. Take your low-carbon
+    mindset to work, to the pub and into your own household. Be friendly
+    but don’t let that get in the way of clarity. All of us can help
+    create a culture in which it becomes embarrassing to ignore climate
+    change – in the same way that other harmful behaviours like smoking
+    or drink-driving are now seen as toxic.
