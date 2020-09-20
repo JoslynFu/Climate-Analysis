@@ -1,7 +1,7 @@
 
 ![Render Rmd](https://github.com/espm-157/climate-module-fu-yuan/workflows/Render%20Rmd/badge.svg)
 
-This is a project by Joslyn and Kelly to explore global climate change. Climate change occurs when long-term weather patterns are altered — for example, through human activity. We aim to better understand how the earth's climate is warming!
+This is a project by Joslyn and Kelly to explore global climate change. Climate change occurs when long-term weather patterns are altered — for example, through human activity. We aim to better understand how the Earth's climate is warming!
 
 ## Project Outline
 
