@@ -4,22 +4,27 @@ Joslyn Fu & Kelly Yuan
 
 **This is a climate change excerise by Joslyn and Jiaming to dive into
 how the main indicators of climate change, including C02 trends, global
-temperature change.**
+temperature change, melting ice sheets, rising sea level, and reducing
+arctic sea ice.**
 
 -----
 
 # CO2 Trends
 
-First, we exmaine the CO2 trends.
+First, we exmaine the CO2 trends. Carbon dioxide is a greenhouse gas: a
+gas that absorbs and radiates heat. Warmed by sunlight, Earth’s land and
+ocean surfaces continuously radiate thermal infrared energy (heat).
+Carbon dioxide concentrations are rising mostly because of the fossil
+fuels that people are burning for energy\!
 
-## Dataset Description
+## CO2 Dataset
 
 This is from the [NASA Climate Change
 Section](http://climate.nasa.gov/vital-signs/carbon-dioxide/), and the
 original data is obtained from the National Oceanic and Atmospheric
 Administration, specifically the Earth System Research Laboratories.
 
-The Data is shown below:
+The data is shown below:
 
 ``` r
 library(tidyverse)
@@ -61,6 +66,9 @@ ggplot(co2, aes(x = decimal_date, y = trend)) + geom_line()
 
 ## Trend from the Graph
 
+The x-axis in the graph is year, the y-axis is CO2 level (parts per
+million).
+
 According to the dataset, C02 level usually reaches its annual maximum
 around May and June, and its minimum around September and Octobor. Based
 on our research, much of this variation happens because of the role of
@@ -92,7 +100,7 @@ After examining CO2 trend, we look into the global temperature data from
 [NASA Global Climate Change
 Section](http://climate.nasa.gov/vital-signs/global-temperature).
 
-## Dataset Description
+## Temperature Dataset Description
 
 The temperature dataset contains information about gobal annual mean
 temperature from 1880 to 2019 relative to 1951-1980 average
@@ -238,10 +246,12 @@ between 2 time window would be smaller.
 
 # Melting Ice Sheets
 
-The ice loss has been extremely massive over the past years. In order to
-investigate this problem, we look into both **Antarctica** (green line)
-and **Greenland** (blue line) mass data from 2002 [NASA Global Climate
-Change Section - Ice
+Sea ice forms and melts in the ocean. Icebergs are chunks of glacial ice
+that break off glaciers and fall into the ocean.The ice loss has been
+extremely massive over the past years. In order to investigate this
+problem, we look into both **Antarctica** (red line) and **Greenland**
+(blue line) mass data from 2002 [NASA Global Climate Change Section -
+Ice
 Sheets](https://climate.nasa.gov/vital-signs/ice-sheets/).
 
 ## Dataset Description
@@ -304,6 +314,11 @@ different reasons. However, greenland mass is decreasing at a faster
 rate than antarctica mass. While greenland mass was initially heavier
 than antarctica mass, greenland mass is now less than the antarctica
 mass.
+
+Melting glaciers add to rising sea levels, which in turn increases
+coastal erosion and elevates storm surge as warming air and ocean
+temperatures create more frequent and intense coastal storms like
+hurricanes and typhoons.
 
 -----
 
@@ -387,25 +402,16 @@ sea_level %>%
 
 The graph above tracks the change in sea level since 1993 as observed by
 satellites. We can easily see the variation is increasing, suggesting
-that the sea level is rising
-    gradually.
+that the sea level is rising gradually.
 
 # Arctic Sea Ice
 
-  - <http://nsidc.org/data/G02135>
-  - <ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv>
+Our data is obtained from the [National Snow & Ice Data
+Center](http://nsidc.org/data/G02135)
 
-## Question 1:
-
-  - Describe the data set: what are the columns and units?
-  - Where do these data come from?
-  - What is the uncertainty in measurement? Resolution of the data?
-    Interpretation of missing values?
-
-## Question 2:
-
-Construct the necessary R code to import this data set as a tidy `Table`
-object.
+From the first table, we can see the sea ice value is measured every the
+other day from 1978 October 26 to 2020 September 13. The unit of extent
+is 10^6 sq km.
 
 ``` r
 library(dplyr)
@@ -462,6 +468,8 @@ sea_ice
     ## 10  1978 11    13      11.5       0
     ## # … with 13,638 more rows
 
+The second table calculates the average sea ice size.
+
 ``` r
 avg_sea_ice <- sea_ice %>% 
   mutate(date = make_date(year, month, day)) %>%
@@ -490,6 +498,10 @@ avg_sea_ice
     ## 10         1987       11.4
     ## # … with 33 more rows
 
+## Average Sea Ice Graph
+
+We then graph it\!
+
 ``` r
 names(avg_sea_ice)[1] <- "year"
 avg_sea_ice%>%
@@ -498,46 +510,14 @@ avg_sea_ice%>%
 
 ![](climate_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
-## Question 3:
+Overall, the average sea ice size is decreasing, with some minor
+turbulence. Upon until recent, the average sea ice size is increasing.
 
-Plot the data and describe the trends you observe.
+-----
 
-# Exercise V: Longer term trends in CO2 Records
+# Conclusion
 
-The data we analyzed in the unit introduction included CO2 records
-dating back only as far as the measurements at the Manua Loa
-observatory. To put these values into geological perspective requires
-looking back much farther than humans have been monitoring atmosopheric
-CO2 levels. To do this, we need another approach.
-
-[Ice core data](http://cdiac.ornl.gov/trends/co2/ice_core_co2.html):
-
-Vostok Core, back to 400,000 yrs before present day
-
-  - Description of data set:
-    <http://cdiac.esd.ornl.gov/trends/co2/vostok.html>
-  - Data source:
-    <http://cdiac.ornl.gov/ftp/trends/co2/vostok.icecore.co2>
-
-## Questions / Tasks:
-
-  - Describe the data set: what are the columns and units? Where do the
-    numbers come from?
-  - What is the uncertainty in measurment? Resolution of the data?
-    Interpretation of missing values?
-  - Read in and prepare data for analysis.
-  - Reverse the ordering to create a chronological record.  
-  - Plot data
-  - Consider various smoothing windowed averages of the data.
-  - Join this series to Mauna Loa data
-  - Plot joined data
-  - Describe your
-conclusions
-
-<!-- end list -->
-
-``` r
-#table <- read.fwf("https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2",
-#                  sep = "\\",skip=21,col.names = c("depth","age of the ice","age of the air","co2 concentration"))
-#table
-```
+From various vital indicators, the climate is changing in a highly
+observable trend\! We can see an increase in CO2, an increase in
+temperature, a decrease in ice sheet weight, an increase in sea level,
+decrease in artic sea ice size.
